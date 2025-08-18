@@ -15,7 +15,7 @@ const Content = ()=>{
     }
     return (
         <div className={style.content_section} onClick={()=>{setShowMenu(false)}}>
-            <i className={`${style.menu_button} fas fa-bars text-dark m-2 pointer`} 
+            <i className={`${style.menu_button} fas fa-bars text-dark m-2 pointer d-md-none`} 
             onClick={handleShowMenu}
             ></i>
             <Users/>

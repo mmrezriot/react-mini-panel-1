@@ -8,7 +8,7 @@ const Sidebar = ()=>{
         <div className={`${style.sidebar_section} bg-secondary`} style={showMenu ? {right:0} : {}}>
             <ul className={`${style.sidebar_list} m-0 p-0`}>
                 <li className={style.sidebar_avatar}>
-                    <img src="/assets/images/user2.jpg" alt="" />
+                    <img src="/assets/images/avatar.png" alt="" />
                 </li>
                 <li>
                     <a href="/">کاربران</a>
