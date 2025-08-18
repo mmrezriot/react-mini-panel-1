@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { MainContext } from './contexts/MainContext';
 import style from './style.module.css';
+import { BrowserRouter , Link } from 'react-router-dom';
 
 const Sidebar = ()=>{
     const {showMenu,setShowMenu} = useContext(MainContext)
@@ -11,16 +12,16 @@ const Sidebar = ()=>{
                     <img src="/assets/images/avatar.png" alt="" />
                 </li>
                 <li>
-                    <a href="/">کاربران</a>
+                    <Link to="/">کاربران</Link>
                 </li>
                 <li>
-                    <a href="/">پست ها</a>
+                    <Link to="/posts">پست ها</Link>
                 </li>
                 <li>
-                    <a href="/">گالری</a>
+                    <Link to="/gallery">گالری</Link>
                 </li>
                 <li>
-                    <a href="/">کارها</a>
+                    <Link to="/todos">کارها</Link>
                 </li>
             </ul>
         </div>
