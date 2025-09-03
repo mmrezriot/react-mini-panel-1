@@ -1,9 +1,47 @@
 import React from 'react';
 import style from '../style.module.css'
 import { Link , useNavigate } from 'react-router';
+import Swal from 'sweetalert2';
 
 const Users = ()=>{
     const navigate = useNavigate();
+
+    const handleDelete = (id)=>{
+        const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: "btn btn-success",
+    cancelButton: "btn btn-danger"
+  },
+  buttonsStyling: false
+});
+swalWithBootstrapButtons.fire({
+  title: "آیا از حذف این کاربر مطمئن هستید؟",
+  text: "در صورت حذف، این عملیات قابل بازگشت نیست!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonText: "بله، حذف شود!",
+  cancelButtonText: "   خیر، منصرف شدم!",
+  reverseButtons: true
+}).then((result) => {
+  if (result.isConfirmed) {
+    swalWithBootstrapButtons.fire({
+      title: " حذف شد! ",
+      text: " حرکتان با موفقیت انجام شد. ",
+      icon: "success"
+    });
+  } else if (
+    /* Read more about handling dismissals below */
+    result.dismiss === Swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons.fire({
+      title: "انصراف داده شد",
+      text: "لغو عملیات حذف",
+      icon: "error"
+    });
+  }
+});
+    }
+
     return (
         <div className={`${style.item_content} mt-5 p-4 container-fluid`}>
             <h4 className="text-center">مدیریت کاربران</h4>
@@ -42,7 +80,7 @@ const Users = ()=>{
                                     return navigate('/users/add/1' , {state: 'userId: 1'});
                                 }
                             }></i>
-                            <i className="fas fa-trash text-danger mx-2 pointer"></i>
+                            <i className="fas fa-trash text-danger mx-2 pointer" onClick={()=>handleDelete(1)}></i>
                         </td>
                     </tr>
                 </tbody>
