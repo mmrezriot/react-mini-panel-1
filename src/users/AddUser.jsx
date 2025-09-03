@@ -1,10 +1,12 @@
 import React from 'react';
 import style from '../style.module.css'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 const AddUser = ()=>{
     const {userId} = useParams();
-    
+    const params = useLocation();
+    console.log(params);
+
     return (
 <div className={`${style.item_content} mt-5 p-4 container-fluid`}>
     <h4 className="text-center mb-4">

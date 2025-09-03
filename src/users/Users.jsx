@@ -12,7 +12,7 @@ const Users = ()=>{
                     <input type="text" className="form-control shadow" placeholder="جستجو"/>
                 </div>
                 <div className="col-2 text-start px-0">
-                    <Link to="/users/add">
+                    <Link to="/users/add" state={'fromUsersPage'}>
                     <button className="btn btn-success">
                         <i className="fas fa-plus text-light"></i>
                     </button>
@@ -39,7 +39,7 @@ const Users = ()=>{
                            
                             <i className="fas fa-edit text-warning mx-2 pointer" onClick={
                                 ()=>{
-                                    return navigate('/users/add/1');
+                                    return navigate('/users/add/1' , {state: 'userId: 1'});
                                 }
                             }></i>
                             <i className="fas fa-trash text-danger mx-2 pointer"></i>
