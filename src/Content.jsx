@@ -5,6 +5,7 @@ import Posts from './posts/Posts';
 import style from './style.module.css'
 import Todos from './todos/Todos';
 import Users from './users/Users';
+import AddUser from './users/AddUser';
 import { Route, Routes } from 'react-router';
 
 const Content = ()=>{
@@ -20,10 +21,14 @@ const Content = ()=>{
             onClick={handleShowMenu}
             ></i>
             <Routes>
-            <Route path="/" element={<Users />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/users/add" element={<AddUser />} >
+            <Route path=":userId" /> 
+            </Route>
             <Route path="/posts" element={<Posts />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/todos" element={<Todos />} />
+            <Route path="*" element={<Users />} />
             </Routes>
         </div>
     )
