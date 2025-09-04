@@ -7,12 +7,14 @@ import axios from "axios";
 const Users = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
+  const [mainusers, setMainUsers] = useState([]);
 
   useEffect(() => {
     axios
       .get("https://jsonplaceholder.typicode.com/users")
       .then((res) => {
         setUsers(res.data);
+        setMainUsers(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -74,6 +76,15 @@ const Users = () => {
       });
   };
 
+  const handleSearch = (e) => {
+    setUsers(
+      mainusers.filter((user) =>
+        user.name.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+    );
+    console.log(e.target.value);
+  };
+
   return (
     <div className={`${style.item_content} mt-5 p-4 container-fluid`}>
       <h4 className="text-center">مدیریت کاربران</h4>
@@ -83,6 +94,7 @@ const Users = () => {
             type="text"
             className="form-control shadow"
             placeholder="جستجو"
+            onChange={handleSearch}
           />
         </div>
         <div className="col-2 text-start px-0">
