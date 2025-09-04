@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { use, useEffect , useState } from 'react';
 import style from '../style.module.css'
 import { Link , useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
+import axios from 'axios';
+
 
 const Users = ()=>{
     const navigate = useNavigate();
+    const [users , setUsers] = useState([]);
+
+
+    useEffect(()=>{
+        axios.get('https://jsonplaceholder.typicode.com/users')
+        .then(res=>{
+            setUsers(res.data);
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+    },[]);
 
     const handleDelete = (id)=>{
         const swalWithBootstrapButtons = Swal.mixin({
@@ -57,7 +71,7 @@ swalWithBootstrapButtons.fire({
                     </Link>
                 </div>
             </div>
-            <table className="table bg-light shadow">
+           {users.length > 0 ? (<table className="table bg-light shadow">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -68,13 +82,12 @@ swalWithBootstrapButtons.fire({
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>qasem</td>
-                        <td>qasemB</td>
-                        <td>mahdicmptr@gmail.com</td>
+                  { users.map(user=>( <tr>
+                        <td>{user.id}</td>
+                        <td>{user.name}</td>
+                        <td>{user.username}</td>
+                        <td>{user.email}</td>
                         <td>
-                           
                             <i className="fas fa-edit text-warning mx-2 pointer" onClick={
                                 ()=>{
                                     return navigate('/users/add/1' , {state: 'userId: 1'});
@@ -82,9 +95,14 @@ swalWithBootstrapButtons.fire({
                             }></i>
                             <i className="fas fa-trash text-danger mx-2 pointer" onClick={()=>handleDelete(1)}></i>
                         </td>
-                    </tr>
+                    </tr>))}
+                   
                 </tbody>
-            </table>
+            </table>) : (
+            <div className="alert alert-info text-center">
+لطفا صبر نمایید 
+            </div>
+              )}
         </div>
     )
 }
