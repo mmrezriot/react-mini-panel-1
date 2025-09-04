@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import style from "../style.module.css";
 import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
@@ -7,7 +7,6 @@ import { useNavigate } from "react-router";
 
 const AddUser = () => {
   const { userId } = useParams();
-  const params = useLocation();
   const navigate = useNavigate();
 
   const [data, setData] = useState({
@@ -16,23 +15,55 @@ const AddUser = () => {
     mobile: "",
     email: "",
   });
+
+  useEffect(() => {
+    axios
+      .get(`https://jsonplaceholder.typicode.com/users/${userId}`)
+      .then((res) => {
+        setData({
+          firstName: res.data.name,
+          lastName: res.data.username,
+          mobile: res.data.mobile,
+          email: res.data.email,
+        });
+      });
+  }, []);
+
   const handleAddUser = (e) => {
     e.preventDefault();
-    axios
-      .post("https://jsonplaceholder.typicode.com/users", data)
-      .then((res) => {
-        Swal.fire({
-          title: "کاربر ایجاد شد.",
-          icon: "success",
-          draggable: true,
+    if (!userId) {
+      axios
+        .post("https://jsonplaceholder.typicode.com/users", data)
+        .then((res) => {
+          Swal.fire({
+            title: "کاربر ایجاد شد.",
+            icon: "success",
+            draggable: true,
+          });
+          setTimeout(() => {
+            navigate("/users");
+          }, 500);
+        })
+        .catch((err) => {
+          console.log(err);
         });
-        setTimeout(() => {
-          navigate("/users");
-        }, 500);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    } else {
+         axios
+        .put(`https://jsonplaceholder.typicode.com/users/${userId}`, data)
+        .then((res) => {
+          Swal.fire({
+            title: "کاربر ویرایش شد.",
+            icon: "success",
+            draggable: true,
+          });
+          setTimeout(() => {
+            navigate("/users");
+          }, 500);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (
@@ -49,6 +80,7 @@ const AddUser = () => {
             name="firstName"
             placeholder="نام"
             onChange={(e) => setData({ ...data, firstName: e.target.value })}
+            value={data.firstName}
             required
           />
         </div>
@@ -60,6 +92,7 @@ const AddUser = () => {
             name="lastName"
             placeholder="نام خانوادگی"
             onChange={(e) => setData({ ...data, lastName: e.target.value })}
+            value={data.lastName}
             required
           />
         </div>
@@ -71,6 +104,7 @@ const AddUser = () => {
             name="mobile"
             placeholder="09xxxxxxxxx"
             onChange={(e) => setData({ ...data, mobile: e.target.value })}
+            value={data.mobile}
             required
           />
         </div>
@@ -82,12 +116,13 @@ const AddUser = () => {
             name="email"
             placeholder="example@email.com"
             onChange={(e) => setData({ ...data, email: e.target.value })}
+            value={data.email}
             required
           />
         </div>
         <div className="col-12 text-center mt-4">
           <button type="submit" className="btn btn-success mx-2">
-            ایجاد
+        {userId ? "ویرایش " : "افزودن  "}
           </button>
           <Link to="/users">
             <button type="button" className="btn btn-secondary mx-2">
