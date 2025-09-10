@@ -3,6 +3,7 @@ import style from "../style.module.css";
 import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import axios from "axios";
+import useTitle from "../../hooks/useTitle";
 
 const Users = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const Users = () => {
       });
   }, []);
 
+  useTitle("مدیریت کاربران");
   const handleDelete = (id) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {

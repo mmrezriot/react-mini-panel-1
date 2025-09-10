@@ -3,6 +3,7 @@ import style from "../style.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import useTitle from "../../hooks/useTitle";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
@@ -20,6 +21,8 @@ const Posts = () => {
         console.log(err);
       });
   }, []);
+    useTitle("مدیریت پست ها");
+
 
   const handleSearch = (e) => {
      setPosts(
